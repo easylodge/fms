@@ -80,6 +80,8 @@ module Endpoints
     end
 
     def addresses(addresses)
+      return nil if addresses.nil?
+
       result = []
 
       addresses.each do |address|
@@ -104,6 +106,8 @@ module Endpoints
     end
 
     def detailed_comments(comments)
+      return nil if comments.nil?
+
       result = []
 
       comments.each do |comment|
@@ -118,7 +122,7 @@ module Endpoints
     end
 
     def insurances(insurances)
-      return [] if insurances.nil?
+      return nil if insurances.nil?
 
       result = []
 
@@ -140,7 +144,7 @@ module Endpoints
     end
 
     def insurance_associated_accounts(associated_loan_accounts)
-      return [] if associated_loan_accounts.nil?
+      return nil if associated_loan_accounts.nil?
 
       result = []
 
@@ -154,6 +158,8 @@ module Endpoints
     end
 
     def liabilities(liabilities)
+      return nil if liabilities.nil?
+
       result = []
 
       liabilities.each do |liability|
@@ -171,6 +177,8 @@ module Endpoints
     end
 
     def liability_owners(owners)
+      return nil if owners.nil?
+
       result = []
 
       owners.each do |owner|
@@ -183,9 +191,15 @@ module Endpoints
     end
 
     def loan_details(details)
+      return nil if details.nil?
+
       result = []
 
       details.each do |detail|
+        documentation_instructions = detail[:documentation_instructions]
+        proposed_repayment = detail[:proposed_repayment]
+        term = detail[:term]
+
         result << {
           "@AmountRequested": detail[:amount_requested].to_i,
           "@EstimatedSettlementDate": detail[:estimated_settlement_date],
@@ -203,8 +217,8 @@ module Endpoints
           },
           "DiscountMargin": discount_margins(detail[:discount_margins]),
           "DocumentationInstructions": {
-            "@Method": detail[:documentation_instructions][:method],
-            "@SendDocumentsTo": detail[:documentation_instructions][:send_documents_to]
+            "@Method": documentation_instructions[:method],
+            "@SendDocumentsTo": documentation_instructions[:send_documents_to]
           },
           "FeaturesSelected": {
             "@RateLock": detail[:features_selected][:rate_lock],
@@ -216,27 +230,27 @@ module Endpoints
             "@PrimaryPurpose": detail[:loan_purpose][:primary_purpose]
           },
           "ProposedRepayment": {
-            "@AnniversaryDate": detail[:proposed_repayment][:anniversary_date],
-            "@Regular": detail[:proposed_repayment][:regular],
-            "RegularRepayment": regular_repayments(detail[:proposed_repayment][:regular_repayments]),
+            "@AnniversaryDate": proposed_repayment[:anniversary_date],
+            "@Regular": proposed_repayment[:regular],
+            "RegularRepayment": regular_repayments(proposed_repayment[:regular_repayments]),
             "StructuredPayments": {
-              "Payment": structured_payments(detail[:proposed_repayment][:structured_payments][:payments])
+              "Payment": structured_payments(proposed_repayment[:structured_payments][:payments])
             }
           },
           "RateComposition": rate_compositions(detail[:rate_compositions]),
           "Security": securities(detail[:securities]),
           "Term": {
-            "@InterestType": detail[:term][:interest_type],
-            "@InterestTypeDuration": detail[:term][:interest_type_duration].to_i,
-            "@InterestTypeUnits": detail[:term][:interest_type_units],
-            "@PaymentType": detail[:term][:payment_type],
-            "@PaymentTypeDuration": detail[:term][:payment_type_duration].to_i,
-            "@PaymentTypeUnits": detail[:term][:payment_type_units],
-            "@TotalInterestAmount": detail[:term][:total_interest_amount].to_i,
-            "@TotalTermDuration": detail[:term][:total_term_duration].to_i,
-            "@TotalTermType": detail[:term][:total_term_type],
-            "@TotalTermUnits": detail[:term][:total_term_units],
-            "DistinctLoanPeriod": distinct_loan_periods(detail[:term][:distinct_loan_periods])
+            "@InterestType": term[:interest_type],
+            "@InterestTypeDuration": term[:interest_type_duration].to_i,
+            "@InterestTypeUnits": term[:interest_type_units],
+            "@PaymentType": term[:payment_type],
+            "@PaymentTypeDuration": term[:payment_type_duration].to_i,
+            "@PaymentTypeUnits": term[:payment_type_units],
+            "@TotalInterestAmount": term[:total_interest_amount].to_i,
+            "@TotalTermDuration": term[:total_term_duration].to_i,
+            "@TotalTermType": term[:total_term_type],
+            "@TotalTermUnits": term[:total_term_units],
+            "DistinctLoanPeriod": distinct_loan_periods(term[:distinct_loan_periods])
           }
         }
       end
@@ -245,6 +259,8 @@ module Endpoints
     end
 
     def borrower_owners(owners)
+      return nil if owners.nil?
+
       result = []
 
       owners.each do |owner|
@@ -257,6 +273,8 @@ module Endpoints
     end
 
     def discount_margins(margins)
+      return nil if margins.nil?
+
       result = []
 
       margins.each do |margin|
@@ -272,6 +290,8 @@ module Endpoints
     end
 
     def offset_accounts(accounts)
+      return nil if accounts.nil?
+
       result = []
 
       accounts.each do |account|
@@ -284,6 +304,8 @@ module Endpoints
     end
 
     def lending_purposes(purposes)
+      return nil if purposes.nil?
+
       result = []
 
       purposes.each do |purpose|
@@ -297,6 +319,8 @@ module Endpoints
     end
 
     def regular_repayments(repayments)
+      return nil if repayments.nil?
+
       result = []
 
       repayments.each do |repayment|
@@ -312,6 +336,8 @@ module Endpoints
     end
 
     def structured_payments(payments)
+      return nil if payments.nil?
+
       result = []
 
       payments.each do |payment|
@@ -325,6 +351,8 @@ module Endpoints
     end
 
     def rate_compositions(compositions)
+      return nil if compositions.nil?
+
       result = []
 
       compositions.each do |rate_composition|
@@ -341,6 +369,8 @@ module Endpoints
     end
 
     def securities(securities)
+      return nil if securities.nil?
+
       result = []
 
       securities.each do |security|
@@ -354,6 +384,8 @@ module Endpoints
     end
 
     def distinct_loan_periods(periods)
+      return nil if periods.nil?
+
       result = []
 
       periods.each do |period|
@@ -366,6 +398,8 @@ module Endpoints
     end
 
     def non_real_estate_assets(assets)
+      return nil if assets.nil?
+
       result = []
 
       assets.each do |asset|
@@ -390,6 +424,8 @@ module Endpoints
     end
 
     def person_applicants(applicants)
+      return nil if applicants.nil?
+
       result = []
 
       applicants.each do |applicant|
@@ -439,6 +475,8 @@ module Endpoints
     end
 
     def email_addresses(email_addresses)
+      return nil if email_addresses.nil?
+
       result = []
 
       email_addresses.each do |email_address|
@@ -452,6 +490,8 @@ module Endpoints
     end
 
     def employments(employments)
+      return nil if employments.nil?
+
       result = []
 
       employments.each do |employment|
@@ -473,6 +513,8 @@ module Endpoints
     end
 
     def proof_of_identities(proof_of_identities)
+      return nil if proof_of_identities.nil?
+
       result = []
 
       proof_of_identities.each do |proof_of_identity|
@@ -487,6 +529,8 @@ module Endpoints
     end
 
     def real_estate_assets(assets)
+      return nil if assets.nil?
+
       result = []
 
       assets.each do |asset|
@@ -518,6 +562,8 @@ module Endpoints
     end
 
     def related_people(related_people)
+      return nil if related_people.nil?
+
       result = []
 
       related_people.each do |related_person|
@@ -530,6 +576,8 @@ module Endpoints
     end
 
     def commissions(commissions)
+      return nil if commissions.nil?
+
       result = []
 
       commissions.each do |commission|
@@ -542,6 +590,8 @@ module Endpoints
     end
 
     def encumbrances(encumbrances)
+      return nil if encumbrances.nil?
+
       result = []
 
       encumbrances.each do |encumbrance|
@@ -557,6 +607,8 @@ module Endpoints
     end
 
     def in_favour_ofs(in_favour_ofs)
+      return nil if in_favour_ofs.nil?
+
       result = []
 
       in_favour_ofs.each do |in_favour_of|
@@ -569,6 +621,8 @@ module Endpoints
     end
 
     def real_estate_insurances(insurances)
+      return nil if insurances.nil?
+
       result = []
 
       insurances.each do |insurance|
@@ -581,6 +635,8 @@ module Endpoints
     end
 
     def owners(owners)
+      return nil if owners.nil?
+
       result = []
 
       owners.each do |owner|
@@ -593,6 +649,8 @@ module Endpoints
     end
 
     def titles(titles)
+      return nil if titles.nil?
+
       result = []
 
       titles.each do |title|
@@ -609,6 +667,8 @@ module Endpoints
     end
 
     def fees(fees)
+      return nil if fees.nil?
+
       result = []
 
       fees.each do |fee|
@@ -626,6 +686,8 @@ module Endpoints
     end
 
     def instructions(instructions)
+      return nil if instructions.nil?
+
       conditions = instructions[:documents_and_settlement_instructions][:submit][:conditions]
       generated_documents = instructions[:documents_and_settlement_instructions][:submit][:generate_documents]
 
@@ -643,6 +705,8 @@ module Endpoints
     end
 
     def instruction_conditions(conditions)
+      return nil if conditions.nil?
+
       result = []
 
       conditions.each do |condition|
@@ -661,6 +725,8 @@ module Endpoints
     end
 
     def instruction_generated_documents(generated_documents)
+      return nil if generated_documents.nil?
+
       result = []
 
       generated_documents.each do |generated_document|
@@ -678,6 +744,8 @@ module Endpoints
     end
 
     def recipients(recipients)
+      return nil if recipients.nil?
+
       result = []
 
       recipients.each do |recipient|
