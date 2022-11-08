@@ -1,0 +1,523 @@
+{
+  "unique_id": "id9001",
+  "content": {
+    "application": {
+      "addresses": [
+        {
+          "australian_post_code": 2668,
+          "australian_state": "NSW",
+          "country": "AU",
+          "suburb": "BARMEDMAN",
+          "type": "Standard",
+          "unique_id": "id9002",
+          "standard": {
+            "street_name": "Shea Common",
+            "street_number": 81,
+            "street_type": "Street",
+            "unit": 9,
+            "unit_type": "Apartment"
+          }
+        },
+        {
+          "australian_post_code": 2105,
+          "australian_state": "NSW",
+          "country": "AU",
+          "suburb": "MORNING BAY",
+          "type": "Standard",
+          "unique_id": "id9003",
+          "standard": {
+            "street_name": "Gary Elbow",
+            "street_number": 74,
+            "street_type": "Road"
+          }
+        }
+      ],
+      "detailed_comments": [
+        {
+          "comment": {
+            "$": "A DAS Sample for a Variable Term Loan with an Owner Occupied Established Security that has multiple borrowers and includes different application fees."
+          }
+        }
+      ],
+      "insurances": [
+        {
+          "insurance_type": "Building Insurance",
+          "insured_amount": 900000,
+          "insurer": "QBE",
+          "unique_id": "id9004"
+        },
+        {
+          "insurance_type": "LMI",
+          "insurer": "Genworth Financial",
+          "associated_loan_accounts": [
+            {
+              "associated_loan_account": "id9005"
+            }
+          ],
+          "premium": {
+            "amount": 9999.99
+          }
+        }
+      ],
+      "liabilities": [
+        {
+          "closing_on_settlement": "Yes",
+          "outstanding_balance": 20000,
+          "type": "Amortising Home Loan",
+          "percent_owned": {
+            "owners": [
+              {
+                "party": "id9006"
+              }
+            ]
+          }
+        }
+      ],
+      "loan_details": [
+        {
+          "amount_requested": 500000,
+          "estimated_settlement_date": "2020-05-13",
+          "funder": "Loanworks",
+          "loan_type": "Amortising Home Loan",
+          "main_product": "Yes",
+          "product_code": "ILMCICPM",
+          "product_name": "Term Loan Variable Interest",
+          "secured": "Yes",
+          "tax_deductible": "No",
+          "unique_id": "id9005",
+          "borrowers": {
+            "proportions": "Equal",
+            "owners": [
+              {
+                "party": "id9006"
+              },
+              {
+                "party": "id9007"
+              }
+            ]
+          },
+          "discount_margins": [
+            {
+              "discount_rate": 0.99,
+              "discount_reason": "Honeymoon Rate",
+              "duration": 12,
+              "duration_units": "Months"
+            }
+          ],
+          "documentation_instructions": {
+            "method": "Email",
+            "send_documents_to": "All"
+          },
+          "features_selected": {
+            "rate_lock": "No",
+            "offset_accounts": [
+              {
+                "is_existing": "No"
+              }
+            ]
+          },
+          "lending_purposes": [
+            {
+              "abs_lending_purpose_code": "ABS-129",
+              "purpose_amount": 450000
+            }
+          ],
+          "loan_purpose": {
+            "nccp_status": "Regulated",
+            "primary_purpose": "Owner Occupied"
+          },
+          "proposed_repayment": {
+            "anniversary_date": "2017-08-07",
+            "regular": "Yes",
+            "regular_repayments": [
+              {
+                "amount": 3107.92,
+                "frequency": "Monthly",
+                "last_repayment_date": "2024-08-23",
+                "total_repayments": 300
+              }
+            ],
+            "structured_payments": {
+              "payments": [
+                {
+                  "amount": 3095.62,
+                  "sequence_number": 1
+                }
+              ]
+            }
+          },
+          "rate_compositions": [
+            {
+              "unique_id": "ID0777",
+              "base_rate": {
+                "name": "Annual Variable Rate",
+                "rate": 3.79
+              }
+            }
+          ],
+          "securities": [
+            {
+              "priority": "Registered Security",
+              "security": "id9009"
+            }
+          ],
+          "term": {
+            "interest_type": "Variable",
+            "interest_type_duration": 300,
+            "interest_type_units": "Months",
+            "payment_type": "Interest Partially Capitalised",
+            "payment_type_duration": 299,
+            "payment_type_units": "Months",
+            "total_interest_amount": 15850,
+            "total_term_duration": 25,
+            "total_term_type": "Total Term",
+            "total_term_units": "Years",
+            "distinct_loan_periods": [
+              {
+                "rate_composition": "ID0777"
+              }
+            ]
+          }
+        }
+      ],
+      "non_real_estate_assets": [
+        {
+          "asset_reference_number": 522658,
+          "transaction": "Transfer",
+          "type": "Financial Asset",
+          "unique_id": "NREA-001",
+          "estimated_value": {
+            "estimate_basis": "Applicant Estimate",
+            "value": 4000000
+          },
+          "financial_asset": {
+            "account_number": {
+              "financial_institution": "Infinity Group Finance Pty Ltd"
+            }
+          }
+        }
+      ],
+      "overview": {
+        "application_type": "Loan",
+        "combination_loan": "No",
+        "doc_type": "Full Doc",
+        "document_generation_engine_reference_number": 2234599,
+        "fhlds_approved": "Yes",
+        "lender_application_reference_number": "111LIXI11222"
+      },
+      "person_applicants": [
+        {
+          "applicant_type": "Borrower",
+          "citizenship": "AU",
+          "date_of_birth": "1965-12-05",
+          "date_of_citizenship": "1965-12-05",
+          "first_home_buyer": "No",
+          "gender": "Male",
+          "independent_financial_advice": "Yes",
+          "independent_financial_advice_requirement": "Recommended",
+          "is_existing_customer": "No",
+          "marital_status": "Single",
+          "primary_applicant": "Yes",
+          "residency_status": "Permanently in Australia",
+          "unique_id": "id9006",
+          "contact": {
+            "current_address": {
+              "housing_status": "Own Home",
+              "mailing_address": "id9002",
+              "residential_address": "id9002"
+            },
+            "email_addresses": [
+              {
+                "email": "ohunt@cruz.com",
+                "email_type": "Home"
+              }
+            ],
+            "mobile": {
+              "country_code": 61,
+              "number": 8441241769
+            }
+          },
+          "employments": [
+            {
+              "payg": {
+                "occupation": "Education, health or welfare services professional",
+                "status": "Primary",
+                "income": {
+                  "gross_salary_amount": 50000,
+                  "gross_salary_frequency": "Yearly",
+                  "proof_code": "Payslip",
+                  "proof_sighted": "Yes"
+                }
+              }
+            }
+          ],
+          "person_name": {
+            "first_name": "Brent",
+            "middle_names": "Rick",
+            "name_title": "Mr",
+            "surname": "Luna"
+          },
+          "privacy": {
+            "allow_credit_check": "Yes",
+            "credit_authority_signed": "Yes",
+            "privacy_act_consent_signed": "Yes"
+          },
+          "proof_of_identities": [
+            {
+              "document_number": "ES12456",
+              "document_type": "ImmiCard",
+              "issuing_organisation": "ZIPID"
+            }
+          ]
+        },
+        {
+          "applicant_type": "Borrower",
+          "citizenship": "AU",
+          "date_of_birth": "1965-06-30",
+          "date_of_citizenship": "1965-06-30",
+          "first_home_buyer": "No",
+          "gender": "Female",
+          "independent_financial_advice": "No",
+          "independent_financial_advice_requirement": "Not Required",
+          "is_existing_customer": "No",
+          "marital_status": "Single",
+          "primary_applicant": "No",
+          "residency_status": "Permanently in Australia",
+          "unique_id": "id9007",
+          "contact": {
+            "current_address": {
+              "housing_status": "Own Home",
+              "mailing_address": "id9002",
+              "residential_address": "id9002"
+            },
+            "email_addresses": [
+              {
+                "email": "jmcgee@hahn.net",
+                "email_type": "Home"
+              }
+            ],
+            "mobile": {
+              "country_code": 61,
+              "number": 4134520920
+            }
+          },
+          "employments": [
+            {
+              "payg": {
+                "occupation": "Education, health or welfare services professional",
+                "status": "Primary",
+                "unique_id": "id9008",
+                "income": {
+                  "gross_salary_amount": 50000,
+                  "gross_salary_frequency": "Yearly",
+                  "proof_code": "Payslip",
+                  "proof_sighted": "Yes"
+                }
+              }
+            }
+          ],
+          "person_name": {
+            "first_name": "Katherine",
+            "middle_names": "Erin",
+            "name_title": "Ms",
+            "surname": "Jordan"
+          },
+          "privacy": {
+            "allow_credit_check": "Yes",
+            "credit_authority_signed": "Yes",
+            "privacy_act_consent_signed": "Yes"
+          },
+          "proof_of_identities": [
+            {
+              "issuing_organisation": "ZIPID"
+            }
+          ]
+        }
+      ],
+      "real_estate_assets": [
+        {
+          "construction": "No",
+          "primary_usage": "Commercial",
+          "property_id": "lender_property_ID",
+          "to_be_used_as_security": "Yes",
+          "transaction": "Purchasing",
+          "unique_id": "id9009",
+          "address": "id9003",
+          "commercial": {
+            "type": "Retail"
+          },
+          "contract_details": {
+            "contract_price_amount": 890000
+          },
+          "encumbrances": [
+            {
+              "description": "A Mortgage",
+              "encumbrance_type": "Mortgage",
+              "registered_number": 456456456,
+              "in_favour_ofs": [
+                {
+                  "name": "Commonwealth Bank of Australia"
+                }
+              ]
+            }
+          ],
+          "insurances": [
+            {
+              "insurance": "id9004"
+            }
+          ],
+          "percent_owned": {
+            "proportions": "Equal",
+            "owners": [
+              {
+                "party": "id9006"
+              },
+              {
+                "party": "id9007"
+              }
+            ]
+          },
+          "titles": [
+            {
+              "duplicate_title_issued": "No",
+              "lot": 15,
+              "plan": 222741,
+              "plan_type": "Deposited Plan",
+              "title_reference": "15/222741"
+            }
+          ]
+        }
+      ],
+      "related_people": [
+        {
+          "unique_id": "RP-005"
+        }
+      ],
+      "sales_channel": {
+        "commissions": [
+          {
+            "trail": 1.2
+          }
+        ],
+        "company": {
+          "contact": {
+            "contact_person": {
+              "email": "AJospeh@saleschannel.com.au",
+              "first_name": "Anthony",
+              "name_title": "Mr",
+              "role": "Auditor",
+              "surname": "Joseph",
+              "contact_person": "RP-005"
+            }
+          }
+        }
+      },
+      "summary": {
+        "fees_disclosure_date": "2017-06-07",
+        "fees": [
+          {
+            "amount": 20,
+            "description": "Monthly Service Fee",
+            "frequency": "Monthly",
+            "pay_fees_from": "Account",
+            "payable_to": "LIXIBank",
+            "type": "Loan Fee"
+          },
+          {
+            "amount": 1000,
+            "description": "Discharge Administration Fee",
+            "frequency": "One Off",
+            "pay_fees_from": "Account",
+            "payable_to": "LIXIBank",
+            "type": "Loan Fee"
+          },
+          {
+            "amount": 100,
+            "description": "Valuation Fee",
+            "frequency": "One Off",
+            "pay_fees_from": "Included in Loan Amount",
+            "payable_to": "LIXIBank",
+            "type": "Valuation Fee",
+            "security": "id9009"
+          },
+          {
+            "amount": 200,
+            "description": "Establishment Fee",
+            "frequency": "One Off",
+            "pay_fees_from": "Included in Loan Amount",
+            "payable_to": "LIXIBank",
+            "type": "Establishment Fee"
+          },
+          {
+            "amount": 50,
+            "description": "Search Processing Fee",
+            "frequency": "One Off",
+            "pay_fees_from": "Included in Loan Amount",
+            "payable_to": "LIXIBank",
+            "type": "Land Titles Office Search Fee"
+          },
+          {
+            "amount": 275,
+            "description": "Solicitors Fee",
+            "frequency": "One Off",
+            "pay_fees_from": "Included in Loan Amount",
+            "payable_to": "Solicitor ABC",
+            "type": "Legal Fee"
+          }
+        ],
+        "loan_to_valuation_ratio": {
+          "application_lvr": 0.5
+        }
+      }
+    }
+  },
+  "instructions": {
+    "documents_and_settlement_instructions": {
+      "submit": {
+        "type": "Loan Documents Request",
+        "conditions": [
+          {
+            "condition_code": 4412,
+            "condition_owner": "Loan Officer",
+            "condition_status": "Not Satisfied",
+            "created_date_time": "2020-01-07T08:46:40",
+            "doc_requirement": "No",
+            "precondition_to_stage": "Conditional Approval",
+            "updated_date_time": "2020-03-23T08:46:40"
+          }
+        ],
+        "generate_documents": [
+          {
+            "delivery_type": "Email",
+            "document_name": "Loan Contract",
+            "context": {
+              "type": "Loan Account",
+              "context": "id9005"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "publisher": {
+    "company_name": "Dunn-Thomas Group Pty Ltd",
+    "contact_name": "William Quinn",
+    "email": "hmartin@hotmail.com.au",
+    "lixi_code": "LIXIBRKR",
+    "published_date_time": "2020-05-12T10:00:00",
+    "software": {
+      "description": "LoanLodger",
+      "lixi_code": "LIXIBANK"
+    }
+  },
+  "recipients": [
+    {
+      "description": "A description of the system.",
+      "lixi_code": "LIXILIXI"
+    }
+  ],
+  "schema_version": {
+    "lixi_transaction_type": "DAS",
+    "lixi_version": "2.2.41"
+  }
+}
