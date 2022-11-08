@@ -2,6 +2,15 @@ require 'pry'
 
 module Endpoints
   module SubmitInstructions
+
+    def submit_instructions(instructions)
+      url = "/deal"
+      body = body(instructions)
+
+      # TODO: This is temporary until we can get the API to accept it.
+      return { url: url, body: body }
+    end
+
     def body(data)
       application = data[:content][:application]
       overview = application[:overview]
