@@ -5,10 +5,12 @@ module FmsApiIntegration
   class Api
     include Endpoints::SubmitInstructions
 
-    def initialize(api_key, production = false)
+    def initialize(username, password, api_key, production = false)
+      @username = username
+      @password = password
       @api_key = api_key
-      @base_url = base_url()
       @production = production
+      @base_url = base_url()
     end
 
   private
