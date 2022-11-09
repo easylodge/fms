@@ -2,7 +2,7 @@ require "spec_helper"
 require "pry"
 
 RSpec.describe Endpoints::SubmitInstructions do
-  let(:subject) { FmsApiIntegration::Api.new("api_key") { extend Endpoints::SubmitInstructions } }
+  let(:subject) { FmsApiIntegration::Api.new("username", "password", false) { extend Endpoints::SubmitInstructions } }
   let(:example_file) { File.read("spec/lib/fms_api_integration/endpoints/submit_instructions_body_example.json") }
 
   describe "#body" do

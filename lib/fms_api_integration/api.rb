@@ -5,10 +5,9 @@ module FmsApiIntegration
   class Api
     include Endpoints::SubmitInstructions
 
-    def initialize(username, password, api_key, production = false)
+    def initialize(username, password, production = false)
       @username = username
       @password = password
-      @api_key = api_key
       @production = production
       @base_url = base_url()
     end
@@ -23,6 +22,10 @@ module FmsApiIntegration
       end
 
       return url
+    end
+
+    def post(endpoint, body)
+      HTTParty.post("#{@base_url}/#{endpoint}", body: body, basic_auth: { username: @username, password: @password })
     end
   end
 end
