@@ -8,8 +8,11 @@ module Endpoints
       post("deal", body(instructions))
     end
 
+    # Format the data into the format FMS expects
+    # NOTE: All keys are required. If you don't have a value for a key, pass in nil.
+    # NOTE: Values will be converted to the type expected.
     def body(data)
-      return nil if data.nil? || data.empty?
+      return [] if data.nil? || data.empty?
 
       application = data[:content][:application]
       overview = application[:overview]
@@ -19,7 +22,7 @@ module Endpoints
       body = {
         "Package": {
           "@ProductionData": production_data(),
-          "@UniqueID": "id9001",
+          "@UniqueID": data[:unique_id],
           "Content": {
             "Application": {
               "@ProductionData": production_data(),
@@ -66,20 +69,20 @@ module Endpoints
           },
           "Instructions": instructions(data[:instructions]),
           "Publisher": {
-            "@CompanyName": (publisher[:company_name] rescue "EasyLodge"),
-            "@ContactName": (publisher[:contact_name]  rescue "support@easylodge.com.au"),
-            "@Email": (publisher[:email]  rescue "support@easylodge.com.au"),
-            "@LIXICode": (publisher[:lixicode]  rescue "LIXIBRKR"),
-            "@PublishedDateTime": (publisher[:published_date_time]  rescue Date.current),
+            "@CompanyName": publisher[:company_name],
+            "@ContactName": publisher[:contact_name],
+            "@Email": publisher[:email],
+            "@LIXICode": publisher[:lixicode],
+            "@PublishedDateTime": publisher[:published_date_time],
             "Software": {
-              "@Description": (publisher[:software][:description]  rescue "EasyLodge"),
-              "@LIXICode": (publisher[:software][:lixicode]  rescue "LIXILIXI"),
+              "@Description": publisher[:software][:description],
+              "@LIXICode": publisher[:software][:lixicode],
             }
           },
           "Recipient": recipients(data[:recipients]),
           "SchemaVersion": {
-            "@LIXITransactionType": "DAS",
-            "@LIXIVersion": "2.2.41"
+            "@LIXITransactionType": data[:schema_version][:lixitransaction_type],
+            "@LIXIVersion": data[:schema_version][:lixiversion],
           }
         }
       }
@@ -88,33 +91,39 @@ module Endpoints
     end
 
     def addresses(addresses)
-      return nil if addresses.nil? || addresses.empty?
+      return [] if addresses.nil? || addresses.empty?
 
       result = []
 
       addresses.each do |address|
         result << {
-          "@AustralianPostCode": address[:australian_post_code].to_i,
+          "@AustralianPostCode": address[:australian_post_code].to_s,
           "@AustralianState": address[:australian_state],
           "@Country": address[:country],
           "@Suburb": address[:suburb],
           "@Type": address[:type],
           "@UniqueID": address[:unique_id],
-          "Standard": {
-            "@StreetName": address[:standard][:street_name],
-            "@StreetNumber": address[:standard][:street_number].to_i,
-            "@StreetType": address[:standard][:street_type],
-            "@Unit": address[:standard][:unit].to_i,
-            "@UnitType": address[:standard][:unit_type]
-          }
+          "Standard": address_standard(address[:standard])
         }
       end
 
       result
     end
 
+
+    def address_standard(address)
+      standard = {}
+      standard["@StreetName"] = address[:street_name] if address[:street_name].present?
+      standard["@StreetNumber"] = address[:street_number] if address[:street_number].present?
+      standard["@StreetType"] = address[:street_type] if address[:street_type].present?
+      standard["@Unit"] = address[:unit] if address[:unit].present?
+      standard["@UnitType"] = address[:unit_type] if address[:unit_type].present?
+
+      standard
+    end
+
     def detailed_comments(comments)
-      return nil if comments.nil? || comments.empty?
+      return [] if comments.nil? || comments.empty?
 
       result = []
 
@@ -130,7 +139,7 @@ module Endpoints
     end
 
     def insurances(insurances)
-      return nil if insurances.nil? || insurances.empty?
+      return [] if insurances.nil? || insurances.empty?
 
       result = []
 
@@ -152,7 +161,7 @@ module Endpoints
     end
 
     def insurance_associated_accounts(associated_loan_accounts)
-      return nil if associated_loan_accounts.nil? || associated_loan_accounts.empty?
+      return [] if associated_loan_accounts.nil? || associated_loan_accounts.empty?
 
       result = []
 
@@ -166,7 +175,7 @@ module Endpoints
     end
 
     def liabilities(liabilities)
-      return nil if liabilities.nil? || liabilities.empty?
+      return [] if liabilities.nil? || liabilities.empty?
 
       result = []
 
@@ -185,7 +194,7 @@ module Endpoints
     end
 
     def liability_owners(owners)
-      return nil if owners.nil? || owners.empty?
+      return [] if owners.nil? || owners.empty?
 
       result = []
 
@@ -199,7 +208,7 @@ module Endpoints
     end
 
     def loan_details(details)
-      return nil if details.nil? || details.empty?
+      return [] if details.nil? || details.empty?
 
       result = []
 
@@ -267,7 +276,7 @@ module Endpoints
     end
 
     def borrower_owners(owners)
-      return nil if owners.nil? || owners.empty?
+      return [] if owners.nil? || owners.empty?
 
       result = []
 
@@ -281,7 +290,7 @@ module Endpoints
     end
 
     def discount_margins(margins)
-      return nil if margins.nil? || margins.empty?
+      return [] if margins.nil? || margins.empty?
 
       result = []
 
@@ -298,7 +307,7 @@ module Endpoints
     end
 
     def offset_accounts(accounts)
-      return nil if accounts.nil? || accounts.empty?
+      return [] if accounts.nil? || accounts.empty?
 
       result = []
 
@@ -312,7 +321,7 @@ module Endpoints
     end
 
     def lending_purposes(purposes)
-      return nil if purposes.nil? || purposes.empty?
+      return [] if purposes.nil? || purposes.empty?
 
       result = []
 
@@ -327,7 +336,7 @@ module Endpoints
     end
 
     def regular_repayments(repayments)
-      return nil if repayments.nil? || repayments.empty?
+      return [] if repayments.nil? || repayments.empty?
 
       result = []
 
@@ -344,7 +353,7 @@ module Endpoints
     end
 
     def structured_payments(payments)
-      return nil if payments.nil? || payments.empty?
+      return [] if payments.nil? || payments.empty?
 
       result = []
 
@@ -359,7 +368,7 @@ module Endpoints
     end
 
     def rate_compositions(compositions)
-      return nil if compositions.nil? || compositions.empty?
+      return [] if compositions.nil? || compositions.empty?
 
       result = []
 
@@ -377,7 +386,7 @@ module Endpoints
     end
 
     def securities(securities)
-      return nil if securities.nil? || securities.empty?
+      return [] if securities.nil? || securities.empty?
 
       result = []
 
@@ -392,7 +401,7 @@ module Endpoints
     end
 
     def distinct_loan_periods(periods)
-      return nil if periods.nil? || periods.empty?
+      return [] if periods.nil? || periods.empty?
 
       result = []
 
@@ -406,13 +415,13 @@ module Endpoints
     end
 
     def non_real_estate_assets(assets)
-      return nil if assets.nil? || assets.empty?
+      return [] if assets.nil? || assets.empty?
 
       result = []
 
       assets.each do |asset|
         result << {
-          "@AssetReferenceNumber": asset[:asset_reference_number].to_i,
+          "@AssetReferenceNumber": asset[:asset_reference_number].to_s,
           "@Transaction": asset[:transaction],
           "@Type": asset[:type],
           "@UniqueID": asset[:unique_id],
@@ -432,7 +441,7 @@ module Endpoints
     end
 
     def person_applicants(applicants)
-      return nil if applicants.nil? || applicants.empty?
+      return [] if applicants.nil? || applicants.empty?
 
       result = []
 
@@ -483,7 +492,7 @@ module Endpoints
     end
 
     def email_addresses(email_addresses)
-      return nil if email_addresses.nil? || email_addresses.empty?
+      return [] if email_addresses.nil? || email_addresses.empty?
 
       result = []
 
@@ -498,7 +507,7 @@ module Endpoints
     end
 
     def employments(employments)
-      return nil if employments.nil? || employments.empty?
+      return [] if employments.nil? || employments.empty?
 
       result = []
 
@@ -521,7 +530,7 @@ module Endpoints
     end
 
     def proof_of_identities(proof_of_identities)
-      return nil if proof_of_identities.nil? || proof_of_identities.empty?
+      return [] if proof_of_identities.nil? || proof_of_identities.empty?
 
       result = []
 
@@ -537,7 +546,7 @@ module Endpoints
     end
 
     def real_estate_assets(assets)
-      return nil if assets.nil? || assets.empty?
+      return [] if assets.nil? || assets.empty?
 
       result = []
 
@@ -570,7 +579,7 @@ module Endpoints
     end
 
     def related_people(related_people)
-      return nil if related_people.nil? || related_people.empty?
+      return [] if related_people.nil? || related_people.empty?
 
       result = []
 
@@ -584,7 +593,7 @@ module Endpoints
     end
 
     def commissions(commissions)
-      return nil if commissions.nil? || commissions.empty?
+      return [] if commissions.nil? || commissions.empty?
 
       result = []
 
@@ -598,7 +607,7 @@ module Endpoints
     end
 
     def encumbrances(encumbrances)
-      return nil if encumbrances.nil? || encumbrances.empty?
+      return [] if encumbrances.nil? || encumbrances.empty?
 
       result = []
 
@@ -615,7 +624,7 @@ module Endpoints
     end
 
     def in_favour_ofs(in_favour_ofs)
-      return nil if in_favour_ofs.nil? || in_favour_ofs.empty?
+      return [] if in_favour_ofs.nil? || in_favour_ofs.empty?
 
       result = []
 
@@ -629,7 +638,7 @@ module Endpoints
     end
 
     def real_estate_insurances(insurances)
-      return nil if insurances.nil? || insurances.empty?
+      return [] if insurances.nil? || insurances.empty?
 
       result = []
 
@@ -643,7 +652,7 @@ module Endpoints
     end
 
     def owners(owners)
-      return nil if owners.nil? || owners.empty?
+      return [] if owners.nil? || owners.empty?
 
       result = []
 
@@ -657,7 +666,7 @@ module Endpoints
     end
 
     def titles(titles)
-      return nil if titles.nil? || titles.empty?
+      return [] if titles.nil? || titles.empty?
 
       result = []
 
@@ -675,7 +684,7 @@ module Endpoints
     end
 
     def fees(fees)
-      return nil if fees.nil? || fees.empty?
+      return [] if fees.nil? || fees.empty?
 
       result = []
 
@@ -694,7 +703,7 @@ module Endpoints
     end
 
     def instructions(instructions)
-      return nil if instructions.nil? || instructions.empty?
+      return [] if instructions.nil? || instructions.empty?
 
       conditions = instructions[:documents_and_settlement_instructions][:submit][:conditions]
       generated_documents = instructions[:documents_and_settlement_instructions][:submit][:generate_documents]
@@ -713,7 +722,7 @@ module Endpoints
     end
 
     def instruction_conditions(conditions)
-      return nil if conditions.nil? || conditions.empty?
+      return [] if conditions.nil? || conditions.empty?
 
       result = []
 
@@ -733,7 +742,7 @@ module Endpoints
     end
 
     def instruction_generated_documents(generated_documents)
-      return nil if generated_documents.nil? || generated_documents.empty?
+      return [] if generated_documents.nil? || generated_documents.empty?
 
       result = []
 
@@ -752,7 +761,7 @@ module Endpoints
     end
 
     def recipients(recipients)
-      return nil if recipients.nil? || recipients.empty?
+      return [] if recipients.nil? || recipients.empty?
 
       result = []
 

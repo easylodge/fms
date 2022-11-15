@@ -25,7 +25,7 @@ module FmsApiIntegration
     end
 
     def post(endpoint, body)
-      HTTParty.post("#{@base_url}/#{endpoint}", body: body, basic_auth: { username: @username, password: @password })
+      HTTParty.post("#{@base_url}/#{endpoint}", body: body.to_json, basic_auth: { username: @username, password: @password }, headers: { "Content-Type" => "application/json" })
     end
   end
 end
