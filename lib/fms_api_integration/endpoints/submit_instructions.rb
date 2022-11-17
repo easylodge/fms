@@ -1,4 +1,3 @@
-require "httparty"
 require 'pry'
 
 module Endpoints
@@ -36,7 +35,7 @@ module Endpoints
                 "@ApplicationType": overview[:application_type],
                 "@CombinationLoan": overview[:combination_loan],
                 "@DocType": overview[:doc_type],
-                "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_i,
+                "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
                 "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
               },
@@ -50,7 +49,6 @@ module Endpoints
                     "ContactPerson": {
                       "@Email": contact_person[:email],
                       "@FirstName": contact_person[:first_name],
-                      "@NameTitle": contact_person[:name_title],
                       "@Role": contact_person[:role],
                       "@Surname": contact_person[:surname],
                       "@x_ContactPerson": contact_person[:contact_person]
@@ -60,10 +58,7 @@ module Endpoints
               },
               "Summary": {
                 "@FeesDisclosureDate": application[:summary][:fees_disclosure_date],
-                "Fee": fees(application[:summary][:fees]),
-                "LoanToValuationRatio": {
-                  "@ApplicationLVR": application[:summary][:loan_to_valuation_ratio][:application_lvr],
-                }
+                "Fee": fees(application[:summary][:fees])
               }
             }
           },
@@ -72,17 +67,17 @@ module Endpoints
             "@CompanyName": publisher[:company_name],
             "@ContactName": publisher[:contact_name],
             "@Email": publisher[:email],
-            "@LIXICode": publisher[:lixicode],
+            "@LIXICode": publisher[:lixi_code],
             "@PublishedDateTime": publisher[:published_date_time],
             "Software": {
               "@Description": publisher[:software][:description],
-              "@LIXICode": publisher[:software][:lixicode],
+              "@LIXICode": publisher[:software][:lixi_code],
             }
           },
           "Recipient": recipients(data[:recipients]),
           "SchemaVersion": {
-            "@LIXITransactionType": data[:schema_version][:lixitransaction_type],
-            "@LIXIVersion": data[:schema_version][:lixiversion],
+            "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
+            "@LIXIVersion": data[:schema_version][:lixi_version],
           }
         }
       }
@@ -114,7 +109,7 @@ module Endpoints
     def address_standard(address)
       standard = {}
       standard["@StreetName"] = address[:street_name] if address[:street_name].present?
-      standard["@StreetNumber"] = address[:street_number] if address[:street_number].present?
+      standard["@StreetNumber"] = address[:street_number].to_s if address[:street_number].present?
       standard["@StreetType"] = address[:street_type] if address[:street_type].present?
       standard["@Unit"] = address[:unit] if address[:unit].present?
       standard["@UnitType"] = address[:unit_type] if address[:unit_type].present?
@@ -428,11 +423,6 @@ module Endpoints
           "EstimatedValue": {
             "@EstimateBasis": asset[:estimated_value][:estimate_basis],
             "@Value": asset[:estimated_value][:value].to_i
-          },
-          "FinancialAsset": {
-            "AccountNumber": {
-              "@FinancialInstitution": asset[:financial_asset][:account_number][:financial_institution]
-            }
           }
         }
       end
@@ -462,20 +452,17 @@ module Endpoints
           "@UniqueID": applicant[:unique_id],
           "Contact": {
             "CurrentAddress": {
-              "@HousingStatus": applicant[:contact][:current_address][:housing_status],
-              "@x_MailingAddress": applicant[:contact][:current_address][:mailing_address],
-              "@x_ResidentialAddress": applicant[:contact][:current_address][:residential_address]
+              "@HousingStatus": applicant[:contact][:current_address][:housing_status]
             },
             "EmailAddress": email_addresses(applicant[:contact][:email_addresses]),
             "Mobile": {
-              "@CountryCode": applicant[:contact][:mobile][:country_code],
+              "@CountryCode": applicant[:contact][:mobile][:country_code].to_s,
               "@Number": applicant[:contact][:mobile][:number]
             }
           },
           "Employment": employments(applicant[:employments]),
           "PersonName": {
             "@FirstName": applicant[:person_name][:first_name],
-            "@MiddleNames": applicant[:person_name][:middle_names],
             "@NameTitle": applicant[:person_name][:name_title],
             "@Surname": applicant[:person_name][:surname]
           },
@@ -518,9 +505,7 @@ module Endpoints
             "@Status": employment[:payg][:status],
             "Income": {
               "@GrossSalaryAmount": employment[:payg][:income][:gross_salary_amount].to_i,
-              "@GrossSalaryFrequency": employment[:payg][:income][:gross_salary_frequency],
-              "@ProofCode": employment[:payg][:income][:proof_code],
-              "@ProofSighted": employment[:payg][:income][:proof_sighted]
+              "@GrossSalaryFrequency": employment[:payg][:income][:gross_salary_frequency]
             }
           }
         }
@@ -558,10 +543,6 @@ module Endpoints
           "@ToBeUsedAsSecurity": asset[:to_be_used_as_security],
           "@Transaction": asset[:transaction],
           "@UniqueID": asset[:unique_id],
-          "@x_Address": asset[:address],
-          "Commercial": {
-            "@Type": asset[:commercial][:type]
-          },
           "ContractDetails": {
             "@ContractPriceAmount": asset[:contract_details][:contract_price_amount].to_i,
           },
@@ -694,7 +675,6 @@ module Endpoints
           "@Description": fee[:description],
           "@Frequency": fee[:frequency],
           "@PayFeesFrom": fee[:pay_fees_from],
-          "@PayableTo": fee[:payable_to],
           "@Type": fee[:type]
         }
       end
