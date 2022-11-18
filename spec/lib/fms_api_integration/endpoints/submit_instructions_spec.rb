@@ -1,5 +1,4 @@
 require "spec_helper"
-require "pry"
 
 RSpec.describe Endpoints::SubmitInstructions do
   let(:subject) { FmsApiIntegration::Api.new("username", "password", false) { extend Endpoints::SubmitInstructions } }
