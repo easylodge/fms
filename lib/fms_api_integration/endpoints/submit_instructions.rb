@@ -108,11 +108,11 @@ module Endpoints
 
     def address_standard(address)
       standard = {}
-      standard["@StreetName"] = address[:street_name] if address[:street_name].present?
-      standard["@StreetNumber"] = address[:street_number].to_s if address[:street_number].present?
-      standard["@StreetType"] = address[:street_type] if address[:street_type].present?
-      standard["@Unit"] = address[:unit] if address[:unit].present?
-      standard["@UnitType"] = address[:unit_type] if address[:unit_type].present?
+      standard["@StreetName"] = address[:street_name] unless address[:street_name].to_s.empty?
+      standard["@StreetNumber"] = address[:street_number].to_s unless address[:street_number].to_s.empty?
+      standard["@StreetType"] = address[:street_type] unless address[:street_type].to_s.empty?
+      standard["@Unit"] = address[:unit] unless address[:unit].to_s.empty?
+      standard["@UnitType"] = address[:unit_type] unless address[:unit_type].to_s.empty?
 
       standard
     end

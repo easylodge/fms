@@ -635,18 +635,18 @@ RSpec.describe Endpoints::SubmitInstructions do
 
     it "returns the correct values" do
       expect(response.first.values).to eq([
-        2668,
+        "2668",
         "NSW",
         "AU",
         "BARMEDMAN",
         "Standard",
         "id9002",
         {
-          :@StreetName => "Shea Common",
-          :@StreetNumber => 81,
-          :@StreetType => "Street",
-          :@Unit => 9,
-          :@UnitType => "Apartment"
+          "@StreetName" => "Shea Common",
+          "@StreetNumber" => "81",
+          "@StreetType" => "Street",
+          "@Unit" => 9,
+          "@UnitType" => "Apartment"
         }
       ])
     end
@@ -1564,24 +1564,19 @@ RSpec.describe Endpoints::SubmitInstructions do
         :@Transaction,
         :@Type,
         :@UniqueID,
-        :EstimatedValue,
-        :FinancialAsset
+        :EstimatedValue
       ])
     end
 
     it "returns an array of hashes with the correct values" do
-      expect(response.first.values).to eq([522658,
+      expect(response.first.values).to eq([
+        "522658",
         "Transfer",
         "Financial Asset",
         "NREA-001",
         {
           :@EstimateBasis => "Applicant Estimate",
           :@Value => 4000000
-        },
-        {
-          :AccountNumber => {
-            :@FinancialInstitution => "Infinity Group Finance Pty Ltd"
-          }
         }
       ])
     end
@@ -1769,9 +1764,7 @@ RSpec.describe Endpoints::SubmitInstructions do
         "id9006",
         {
           :CurrentAddress => {
-            :@HousingStatus => "Own Home",
-            :@x_MailingAddress => "id9002",
-            :@x_ResidentialAddress => "id9002"
+            :@HousingStatus => "Own Home"
           },
           :EmailAddress => [
             {
@@ -1780,7 +1773,7 @@ RSpec.describe Endpoints::SubmitInstructions do
             }
           ],
          :Mobile => {
-          :@CountryCode => 61,
+          :@CountryCode => "61",
           :@Number => 8441241769
           }
         },
@@ -1790,15 +1783,12 @@ RSpec.describe Endpoints::SubmitInstructions do
             :@Status => "Primary",
             :Income => {
               :@GrossSalaryAmount => 50000,
-              :@GrossSalaryFrequency => "Yearly",
-              :@ProofCode => "Payslip",
-              :@ProofSighted => "Yes"
+              :@GrossSalaryFrequency => "Yearly"
             }
           }
         }],
         {
           :@FirstName => "Brent",
-          :@MiddleNames => "Rick",
           :@NameTitle => "Mr",
           :@Surname => "Luna"
         },
@@ -1905,9 +1895,7 @@ RSpec.describe Endpoints::SubmitInstructions do
       expect(response.first[:PAYG].keys).to eq([:@Occupation, :@Status, :Income])
       expect(response.first[:PAYG][:Income].keys).to eq([
         :@GrossSalaryAmount,
-        :@GrossSalaryFrequency,
-        :@ProofCode,
-        :@ProofSighted
+        :@GrossSalaryFrequency
       ])
     end
 
@@ -1918,9 +1906,7 @@ RSpec.describe Endpoints::SubmitInstructions do
           :@Status => "Primary",
           :Income => {
             :@GrossSalaryAmount => 50000,
-            :@GrossSalaryFrequency => "Yearly",
-            :@ProofCode => "Payslip",
-            :@ProofSighted => "Yes"
+            :@GrossSalaryFrequency => "Yearly"
           }
         }
       ])
@@ -2048,8 +2034,6 @@ RSpec.describe Endpoints::SubmitInstructions do
         :@ToBeUsedAsSecurity,
         :@Transaction,
         :@UniqueID,
-        :@x_Address,
-        :Commercial,
         :ContractDetails,
         :Encumbrance,
         :Insurance,
@@ -2066,10 +2050,6 @@ RSpec.describe Endpoints::SubmitInstructions do
         "Yes",
         "Purchasing",
         "id9009",
-        "id9003",
-        {
-          :@Type => "Retail"
-        },
         {
           :@ContractPriceAmount => 890000
         },
@@ -2454,7 +2434,6 @@ RSpec.describe Endpoints::SubmitInstructions do
           :@Description,
           :@Frequency,
           :@PayFeesFrom,
-          :@PayableTo,
           :@Type
         ]
       )
@@ -2467,7 +2446,6 @@ RSpec.describe Endpoints::SubmitInstructions do
           "Monthly Service Fee",
           "Monthly",
           "Account",
-          "LIXIBank",
           "Loan Fee"
         ]
       )
