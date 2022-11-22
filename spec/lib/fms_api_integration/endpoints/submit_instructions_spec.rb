@@ -70,6 +70,7 @@ RSpec.describe Endpoints::SubmitInstructions do
             "liabilities": [
               {
                 "closing_on_settlement": "Yes",
+                "clearing_from_this_loan": "Yes",
                 "outstanding_balance": 20000,
                 "type": "Amortising Home Loan",
                 "percent_owned": {
@@ -217,8 +218,6 @@ RSpec.describe Endpoints::SubmitInstructions do
               {
                 "applicant_type": "Borrower",
                 "citizenship": "AU",
-                "date_of_birth": "1965-12-05",
-                "date_of_citizenship": "1965-12-05",
                 "first_home_buyer": "No",
                 "gender": "Male",
                 "independent_financial_advice": "Yes",
@@ -281,8 +280,6 @@ RSpec.describe Endpoints::SubmitInstructions do
               {
                 "applicant_type": "Borrower",
                 "citizenship": "AU",
-                "date_of_birth": "1965-06-30",
-                "date_of_citizenship": "1965-06-30",
                 "first_home_buyer": "No",
                 "gender": "Female",
                 "independent_financial_advice": "No",
@@ -766,6 +763,7 @@ RSpec.describe Endpoints::SubmitInstructions do
       [
         {
           "closing_on_settlement": "Yes",
+          "clearing_from_this_loan": "Yes",
           "outstanding_balance": 20000,
           "type": "Amortising Home Loan",
           "percent_owned": {
@@ -778,6 +776,7 @@ RSpec.describe Endpoints::SubmitInstructions do
         },
         {
           "closing_on_settlement": "Yes",
+          "clearing_from_this_loan": "Yes",
           "outstanding_balance": 20000,
           "type": "Amortising Home Loan",
           "percent_owned": {
@@ -807,6 +806,7 @@ RSpec.describe Endpoints::SubmitInstructions do
     it "returns the correct keys" do
       expect(response.first.keys).to eq([
         :@ClosingOnSettlement,
+        :@ClearingFromThisLoan,
         :@OutstandingBalance,
         :@Type,
         :PercentOwned
@@ -815,6 +815,7 @@ RSpec.describe Endpoints::SubmitInstructions do
 
     it "returns the correct values" do
       expect(response.first.values).to eq([
+        "Yes",
         "Yes",
         20000,
         "Amortising Home Loan",
@@ -1587,8 +1588,6 @@ RSpec.describe Endpoints::SubmitInstructions do
         {
           "applicant_type": "Borrower",
           "citizenship": "AU",
-          "date_of_birth": "1965-12-05",
-          "date_of_citizenship": "1965-12-05",
           "first_home_buyer": "No",
           "gender": "Male",
           "independent_financial_advice": "Yes",
@@ -1651,8 +1650,6 @@ RSpec.describe Endpoints::SubmitInstructions do
         {
           "applicant_type": "Borrower",
           "citizenship": "AU",
-          "date_of_birth": "1965-06-30",
-          "date_of_citizenship": "1965-06-30",
           "first_home_buyer": "No",
           "gender": "Female",
           "independent_financial_advice": "No",
@@ -1728,8 +1725,6 @@ RSpec.describe Endpoints::SubmitInstructions do
       expect(response.first.keys).to eq([
         :@ApplicantType,
         :@Citizenship,
-        :@DateOfBirth,
-        :@DateOfCitizenship,
         :@FirstHomeBuyer,
         :@Gender,
         :@IndependentFinancialAdvice,
@@ -1750,8 +1745,6 @@ RSpec.describe Endpoints::SubmitInstructions do
     it "returns an array of hashes with the correct values" do
       expect(response.first.values).to eq(["Borrower",
         "AU",
-        "1965-12-05",
-        "1965-12-05",
         "No",
         "Male",
         "Yes",
@@ -1763,7 +1756,9 @@ RSpec.describe Endpoints::SubmitInstructions do
         "id9006",
         {
           :CurrentAddress => {
-            :@HousingStatus => "Own Home"
+            :@HousingStatus => "Own Home",
+            :@x_MailingAddress => "id9002",
+            :@x_ResidentialAddress => "id9002"
           },
           :EmailAddress => [
             {

@@ -175,6 +175,7 @@ module Endpoints
       liabilities.each do |liability|
         result << {
           "@ClosingOnSettlement": liability[:closing_on_settlement],
+          "@ClearingFromThisLoan": liability[:clearing_from_this_loan],
           "@OutstandingBalance": liability[:outstanding_balance].to_i,
           "@Type": liability[:type],
           "PercentOwned": {
@@ -437,8 +438,6 @@ module Endpoints
         result << {
           "@ApplicantType": applicant[:applicant_type],
           "@Citizenship": applicant[:citizenship],
-          "@DateOfBirth": applicant[:date_of_birth],
-          "@DateOfCitizenship": applicant[:date_of_citizenship],
           "@FirstHomeBuyer": applicant[:first_home_buyer],
           "@Gender": applicant[:gender],
           "@IndependentFinancialAdvice": applicant[:independent_financial_advice],
@@ -450,7 +449,9 @@ module Endpoints
           "@UniqueID": applicant[:unique_id],
           "Contact": {
             "CurrentAddress": {
-              "@HousingStatus": applicant[:contact][:current_address][:housing_status]
+              "@HousingStatus": applicant[:contact][:current_address][:housing_status],
+              "@x_MailingAddress": applicant[:contact][:current_address][:mailing_address],
+              "@x_ResidentialAddress": applicant[:contact][:current_address][:residential_address]
             },
             "EmailAddress": email_addresses(applicant[:contact][:email_addresses]),
             "Mobile": {
