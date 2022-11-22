@@ -521,6 +521,11 @@ RSpec.describe Endpoints::SubmitInstructions do
             "lixi_code": "LIXILIXI"
           }
         ],
+        "business_channel": {
+          "contact": {
+              "email": "test@email.com",
+          }
+        },
         "schema_version": {
           "lixi_transaction_type": "DAS",
           "lixi_version": "2.2.41"

@@ -73,6 +73,11 @@ module Endpoints
             }
           },
           "Recipient": recipients(data[:recipients]),
+          "BusinessChannel": {
+            "Contact": {
+                "@Email": data[:business_channel][:contact][:email],
+            }
+          },
           "SchemaVersion": {
             "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
             "@LIXIVersion": data[:schema_version][:lixi_version],
