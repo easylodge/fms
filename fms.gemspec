@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "fms_api_integration/version"
+require "fms/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "fms_api_integration"
-  spec.version       = FmsApiIntegration::VERSION
+  spec.name          = "fms"
+  spec.version       = Fms::VERSION
   spec.authors       = ["SeanBClark"]
   spec.email         = ["sean.bradley.clark@gmail.com"]
 
   spec.summary       = %q{A Ruby gem for integrating with the First Mortgage Solutions API}
   spec.description   = %q{A Ruby gem for integrating with the First Mortgage Solutions API}
-  spec.homepage      = "https://github.com/easylodge/jll_property_valuation"
+  spec.homepage      = "https://github.com/easylodge/fms"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

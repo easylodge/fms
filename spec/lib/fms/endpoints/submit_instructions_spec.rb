@@ -1,8 +1,8 @@
 require "spec_helper"
 
 RSpec.describe Endpoints::SubmitInstructions do
-  let(:subject) { FmsApiIntegration::Api.new("username", "password", false) { extend Endpoints::SubmitInstructions } }
-  let(:example_file) { File.read("spec/lib/fms_api_integration/endpoints/submit_instructions_body_example.json") }
+  let(:subject) { Fms::Api.new("username", "password", false) { extend Endpoints::SubmitInstructions } }
+  let(:example_file) { File.read("spec/lib/fms/endpoints/submit_instructions_body_example.json") }
 
   describe "#body" do
     let(:params) {

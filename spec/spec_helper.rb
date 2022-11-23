@@ -1,6 +1,6 @@
 require "bundler/setup"
-require "fms_api_integration"
-require "fms_api_integration/endpoints/submit_instructions"
+require "fms"
+require "fms/endpoints/submit_instructions"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

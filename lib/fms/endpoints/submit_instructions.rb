@@ -6,7 +6,7 @@ module Endpoints
     end
 
     # Format the data into the format FMS expects
-    # NOTE: All keys are required. If you don't have a value for a key, pass in nil.
+    # NOTE: All keys are required.
     # NOTE: Values will be converted to the type expected.
     def body(data)
       return [] if data.nil? || data.empty?
@@ -107,7 +107,6 @@ module Endpoints
 
       result
     end
-
 
     def address_standard(address)
       standard = {}
