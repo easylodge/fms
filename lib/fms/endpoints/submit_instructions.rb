@@ -180,6 +180,7 @@ module Endpoints
         result << {
           "@ClosingOnSettlement": liability[:closing_on_settlement],
           "@ClearingFromThisLoan": liability[:clearing_from_this_loan],
+          "@ClearingFromThisLoanAmount": liability[:clearing_from_this_loan_amount].to_i,
           "@OutstandingBalance": liability[:outstanding_balance].to_i,
           "@Type": liability[:type],
           "PercentOwned": {
@@ -254,6 +255,7 @@ module Endpoints
           },
           "RateComposition": rate_compositions(detail[:rate_compositions]),
           "Security": securities(detail[:securities]),
+          "FundsDisbursement": funds_disburements(detail[:funds_disburements]),
           "Term": {
             "@InterestType": term[:interest_type],
             "@InterestTypeDuration": term[:interest_type_duration].to_i,
@@ -266,6 +268,11 @@ module Endpoints
             "@TotalTermType": term[:total_term_type],
             "@TotalTermUnits": term[:total_term_units],
             "DistinctLoanPeriod": distinct_loan_periods(term[:distinct_loan_periods])
+          },
+          "EquityRelease": {
+            "Amount": {
+              "@CalculateAsPercentage": detail[:equity_release][:amount][:calculate_as_percentage],
+            }
           }
         }
       end
@@ -398,6 +405,21 @@ module Endpoints
       result
     end
 
+    def funds_disburements(disburements)
+      return [] if disburements.nil? || disburements.empty?
+
+      result = []
+
+      disburements.each do |disburement|
+        result << {
+          "CompanyName": disburement[:company_name],
+          "Amount": disburement[:amount].to_i
+        }
+      end
+
+      result
+    end
+
     def distinct_loan_periods(periods)
       return [] if periods.nil? || periods.empty?
 
@@ -524,9 +546,7 @@ module Endpoints
 
       proof_of_identities.each do |proof_of_identity|
         result << {
-          "@DocumentNumber": proof_of_identity[:document_number],
-          "@DocumentType": proof_of_identity[:document_type],
-          "@IssuingOrganisation": proof_of_identity[:issuing_organisation]
+          "@DateDocumentVerified": proof_of_identity[:date_document_verified],
         }
       end
 
@@ -555,7 +575,16 @@ module Endpoints
             "@Proportions": asset[:percent_owned][:proportions],
             "Owner": owners(asset[:percent_owned][:owners])
           },
-          "Title": titles(asset[:titles])
+          "Title": [
+            {
+              "@Volume": asset[:title][:volume],
+              "@Folio": asset[:title][:folio],
+            }
+          ],
+          "EstimatedValue": {
+            "@Value": asset[:estimated_value][:value].to_i,
+            "@ValuedDate": asset[:estimated_value][:valued_date]
+          }
         }
       end
 
@@ -661,6 +690,8 @@ module Endpoints
           "@Plan": title[:plan].to_i,
           "@PlanType": title[:plan_type],
           "@TitleReference": title[:title_reference],
+          "Folio": title[:folio],
+          "Volume": title[:volume]
         }
       end
 
