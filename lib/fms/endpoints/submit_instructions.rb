@@ -635,6 +635,8 @@ module Endpoints
           "@Description": encumbrance[:description],
           "@EncumbranceType": encumbrance[:encumbrance_type],
           "@RegisteredNumber": encumbrance[:registered_number],
+          "@Priority": encumbrance[:priority],
+          "@PriorityAmount": encumbrance[:priority_amount].to_i,
           "InFavourOf": in_favour_ofs(encumbrance[:in_favour_ofs])
         }
       end

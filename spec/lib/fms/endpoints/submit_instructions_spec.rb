@@ -1986,6 +1986,8 @@ RSpec.describe Endpoints::SubmitInstructions do
               "description": "A Mortgage",
               "encumbrance_type": "Mortgage",
               "registered_number": 456456456,
+              "priority": "First Security Interest",
+              "priority_amount": 890000,
               "in_favour_ofs": [
                 {
                   "name": "Commonwealth Bank of Australia"
@@ -2063,6 +2065,8 @@ RSpec.describe Endpoints::SubmitInstructions do
             :@Description => "A Mortgage",
             :@EncumbranceType => "Mortgage",
             :@RegisteredNumber => 456456456,
+            :@Priority => "First Security Interest",
+            :@PriorityAmount => 890000,
             :InFavourOf => [{
               :@Name => "Commonwealth Bank of Australia"
             }]
@@ -2175,6 +2179,8 @@ RSpec.describe Endpoints::SubmitInstructions do
           "description": "A Mortgage",
           "encumbrance_type": "Mortgage",
           "registered_number": 456456456,
+          "priority": "First Security Interest",
+          "priority_amount": 890000,
           "in_favour_ofs": [
             {
               "name": "Commonwealth Bank of Australia"
@@ -2185,6 +2191,8 @@ RSpec.describe Endpoints::SubmitInstructions do
           "description": "A Mortgage",
           "encumbrance_type": "Mortgage",
           "registered_number": 456456456,
+          "priority": "First Security Interest",
+          "priority_amount": 890000,
           "in_favour_ofs": [
             {
               "name": "Commonwealth Bank of Australia"
@@ -2212,6 +2220,8 @@ RSpec.describe Endpoints::SubmitInstructions do
         :@Description,
         :@EncumbranceType,
         :@RegisteredNumber,
+        :@Priority,
+        :@PriorityAmount,
         :InFavourOf
       ])
     end
@@ -2221,6 +2231,8 @@ RSpec.describe Endpoints::SubmitInstructions do
         "A Mortgage",
         "Mortgage",
         456456456,
+        "First Security Interest",
+        890000,
         [
           {
             :@Name => "Commonwealth Bank of Australia"
