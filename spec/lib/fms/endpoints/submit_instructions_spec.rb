@@ -186,6 +186,11 @@ RSpec.describe Endpoints::SubmitInstructions do
                       "rate_composition": "ID0777"
                     }
                   ]
+                },
+                "equity_release": {
+                  "amount": {
+                    "calculate_as_percentage": 10
+                  }
                 }
               }
             ],
@@ -212,7 +217,11 @@ RSpec.describe Endpoints::SubmitInstructions do
               "doc_type": "Full Doc",
               "document_generation_engine_reference_number": 2234599,
               "fhlds_approved": "Yes",
-              "lender_application_reference_number": "111LIXI11222"
+              "lender_application_reference_number": "111LIXI11222",
+              "terms_and_conditions": {
+                "terms_description": "Loanworks",
+                "terms_name": "Pre Approval"
+              }
             },
             "person_applicants": [
               {
@@ -382,15 +391,14 @@ RSpec.describe Endpoints::SubmitInstructions do
                     }
                   ]
                 },
-                "titles": [
-                  {
-                    "duplicate_title_issued": "No",
-                    "lot": 15,
-                    "plan": 222741,
-                    "plan_type": "Deposited Plan",
-                    "title_reference": "15/222741"
-                  }
-                ]
+                "title": {
+                  'volume': 'v1234',
+                  'folio': 'f5678'
+                },
+                "estimated_value": {
+                  "value": 300000,
+                  "value_date": "2017-08-07"
+                }
               }
             ],
             "related_people": [
@@ -769,6 +777,7 @@ RSpec.describe Endpoints::SubmitInstructions do
         {
           "closing_on_settlement": "Yes",
           "clearing_from_this_loan": "Yes",
+          "clearing_from_this_loan_amount": 20000,
           "outstanding_balance": 20000,
           "type": "Amortising Home Loan",
           "percent_owned": {
@@ -782,6 +791,7 @@ RSpec.describe Endpoints::SubmitInstructions do
         {
           "closing_on_settlement": "Yes",
           "clearing_from_this_loan": "Yes",
+          "clearing_from_this_loan_amount": 20000,
           "outstanding_balance": 20000,
           "type": "Amortising Home Loan",
           "percent_owned": {
@@ -812,6 +822,7 @@ RSpec.describe Endpoints::SubmitInstructions do
       expect(response.first.keys).to eq([
         :@ClosingOnSettlement,
         :@ClearingFromThisLoan,
+        :@ClearingFromThisLoanAmount,
         :@OutstandingBalance,
         :@Type,
         :PercentOwned
@@ -822,6 +833,7 @@ RSpec.describe Endpoints::SubmitInstructions do
       expect(response.first.values).to eq([
         "Yes",
         "Yes",
+        20000,
         20000,
         "Amortising Home Loan",
         {
@@ -985,6 +997,11 @@ RSpec.describe Endpoints::SubmitInstructions do
                 "rate_composition": "ID0777"
               }
             ]
+          },
+          "equity_release": {
+            "amount": {
+              "calculate_as_percentage": 10
+            }
           }
         }
       ]
@@ -1020,7 +1037,9 @@ RSpec.describe Endpoints::SubmitInstructions do
         :ProposedRepayment,
         :RateComposition,
         :Security,
-        :Term
+        :FundsDisbursement,
+        :Term,
+        :EquityRelease
       ])
     end
 
@@ -1114,6 +1133,7 @@ RSpec.describe Endpoints::SubmitInstructions do
             :@x_Security => "id9009"
           }
         ],
+        [],
         {
           :@InterestType => "Variable",
           :@InterestTypeDuration => 300,
@@ -1130,6 +1150,11 @@ RSpec.describe Endpoints::SubmitInstructions do
               :@x_RateComposition => "ID0777"
             }
           ]
+        },
+        {
+          :Amount => {
+            :@CalculateAsPercentage => 10,
+          }
         }
       ])
     end
@@ -1645,11 +1670,7 @@ RSpec.describe Endpoints::SubmitInstructions do
             "privacy_act_consent_signed": "Yes"
           },
           "proof_of_identities": [
-            {
-              "document_number": "ES12456",
-              "document_type": "ImmiCard",
-              "issuing_organisation": "ZIPID"
-            }
+            "date_document_verified": "2017-01-01",
           ]
         },
         {
@@ -1708,9 +1729,7 @@ RSpec.describe Endpoints::SubmitInstructions do
             "privacy_act_consent_signed": "Yes"
           },
           "proof_of_identities": [
-            {
-              "issuing_organisation": "ZIPID"
-            }
+            "date_document_verified": "2017-01-01",
           ]
         }
       ]
@@ -1796,9 +1815,7 @@ RSpec.describe Endpoints::SubmitInstructions do
           :@CreditAuthoritySigned => "Yes",
           :@PrivacyActConsentSigned => "Yes"},
         [{
-          :@DocumentNumber => "ES12456",
-          :@DocumentType => "ImmiCard",
-          :@IssuingOrganisation => "ZIPID"
+          :@DateDocumentVerified => "2017-01-01",
         }]
       ])
     end
@@ -1916,14 +1933,7 @@ RSpec.describe Endpoints::SubmitInstructions do
     let(:params) {
       [
         {
-          "document_number": "ES12456",
-          "document_type": "ImmiCard",
-          "issuing_organisation": "ZIPID"
-        },
-        {
-          "document_number": "ES12456",
-          "document_type": "ImmiCard",
-          "issuing_organisation": "ZIPID"
+          "date_document_verified": "ES12456",
         }
       ]
     }
@@ -1938,22 +1948,18 @@ RSpec.describe Endpoints::SubmitInstructions do
     end
 
     it "returns an array of 2 hashes" do
-      expect(response.count).to eq(2)
+      expect(response.count).to eq(1)
     end
 
     it "returns an array of hashes with the correct keys" do
       expect(response.first.keys).to eq([
-        :@DocumentNumber,
-        :@DocumentType,
-        :@IssuingOrganisation
+        :@DateDocumentVerified
       ])
     end
 
     it "returns an array of hashes with the correct values" do
       expect(response.first.values).to eq([
-        "ES12456",
-        "ImmiCard",
-        "ZIPID"
+        "ES12456"
       ])
     end
   end
@@ -2003,15 +2009,14 @@ RSpec.describe Endpoints::SubmitInstructions do
               }
             ]
           },
-          "titles": [
-            {
-              "duplicate_title_issued": "No",
-              "lot": 15,
-              "plan": 222741,
-              "plan_type": "Deposited Plan",
-              "title_reference": "15/222741"
-            }
-          ]
+          "title": {
+            'volume': 'v1234',
+            'folio': 'f5678'
+          },
+          "estimated_value": {
+            "value": 300000,
+            "valued_date": "2017-08-07"
+          }
         }
       ]
     }
@@ -2037,7 +2042,8 @@ RSpec.describe Endpoints::SubmitInstructions do
         :Encumbrance,
         :Insurance,
         :PercentOwned,
-        :Title
+        :Title,
+        :EstimatedValue
       ])
     end
 
@@ -2080,13 +2086,14 @@ RSpec.describe Endpoints::SubmitInstructions do
         },
         [
           {
-            :@DuplicateTitleIssued => "No",
-            :@Lot => 15,
-            :@Plan => 222741,
-            :@PlanType => "Deposited Plan",
-            :@TitleReference => "15/222741"
+            :@Volume => 'v1234',
+            :@Folio => 'f5678'
           }
-        ]
+        ],
+        {
+          :@Value => 300000,
+          :@ValuedDate => "2017-08-07"
+        }
       ])
     end
   end
@@ -2345,14 +2352,18 @@ RSpec.describe Endpoints::SubmitInstructions do
           "lot": 15,
           "plan": 222741,
           "plan_type": "Deposited Plan",
-          "title_reference": "15/222741"
+          "title_reference": "15/222741",
+          "folio": "Folio 1234",
+          "volume": "Volume 1234"
         },
         {
           "duplicate_title_issued": "No",
           "lot": 15,
           "plan": 222741,
           "plan_type": "Deposited Plan",
-          "title_reference": "15/222741"
+          "title_reference": "15/222741",
+          "folio": "Folio 1234",
+          "volume": "Volume 1234"
         }
       ]
     }
@@ -2376,7 +2387,9 @@ RSpec.describe Endpoints::SubmitInstructions do
         :@Lot,
         :@Plan,
         :@PlanType,
-        :@TitleReference
+        :@TitleReference,
+        :Folio,
+        :Volume
       ])
     end
 
@@ -2386,7 +2399,9 @@ RSpec.describe Endpoints::SubmitInstructions do
         15,
         222741,
         "Deposited Plan",
-        "15/222741"
+        "15/222741",
+        "Folio 1234",
+        "Volume 1234"
       ])
     end
   end

@@ -35,7 +35,11 @@ module Endpoints
                 "@DocType": overview[:doc_type],
                 "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
-                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
+                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number],
+                "TermsAndConditions": {
+                  "@TermsDescription": overview[:terms_and_conditions][:terms_description],
+                  "@TermsName": overview[:terms_and_conditions][:terms_name]
+                }
               },
               "PersonApplicant": person_applicants(application[:person_applicants]),
               "RealEstateAsset": real_estate_assets(application[:real_estate_assets]),
@@ -544,6 +548,7 @@ module Endpoints
 
       result = []
 
+      puts proof_of_identities
       proof_of_identities.each do |proof_of_identity|
         result << {
           "@DateDocumentVerified": proof_of_identity[:date_document_verified],
@@ -559,6 +564,7 @@ module Endpoints
       result = []
 
       assets.each do |asset|
+        puts asset
         result << {
           "@Construction": asset[:construction],
           "@PrimaryUsage": asset[:primary_usage],
