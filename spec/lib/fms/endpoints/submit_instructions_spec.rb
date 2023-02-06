@@ -189,7 +189,8 @@ RSpec.describe Endpoints::SubmitInstructions do
                 },
                 "equity_release": {
                   "amount": {
-                    "calculate_as_percentage": 10
+                    "calculate_as_percentage": 10,
+                    "lump_sum": 50000
                   }
                 }
               }
@@ -481,6 +482,10 @@ RSpec.describe Endpoints::SubmitInstructions do
               "loan_to_valuation_ratio": {
                 "application_lvr": 0.5
               }
+            },
+            "related_company": {
+              "unique_id": "id9001",
+              "company_name": "LIXIBank",
             }
           }
         },
@@ -1000,7 +1005,8 @@ RSpec.describe Endpoints::SubmitInstructions do
           },
           "equity_release": {
             "amount": {
-              "calculate_as_percentage": 10
+              "calculate_as_percentage": 10,
+              "lump_sum": 50000
             }
           }
         }
@@ -1154,6 +1160,7 @@ RSpec.describe Endpoints::SubmitInstructions do
         {
           :Amount => {
             :@CalculateAsPercentage => 10,
+            :@LumpSum => 50000
           }
         }
       ])
@@ -2017,7 +2024,8 @@ RSpec.describe Endpoints::SubmitInstructions do
           },
           "estimated_value": {
             "value": 300000,
-            "valued_date": "2017-08-07"
+            "valued_date": "2017-08-07",
+            "valuer": "id9005"
           }
         }
       ]
@@ -2095,6 +2103,7 @@ RSpec.describe Endpoints::SubmitInstructions do
           }
         ],
         {
+          :@Valuer => "id9005",
           :@Value => 300000,
           :@ValuedDate => "2017-08-07"
         }
