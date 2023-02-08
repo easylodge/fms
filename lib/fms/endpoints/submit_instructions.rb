@@ -35,7 +35,13 @@ module Endpoints
                 "@DocType": overview[:doc_type],
                 "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
-                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
+                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number],
+                "TermsAndConditions": [
+                  {
+                    "@TermsDescription": overview[:terms_and_conditions][:terms_description],
+                    "@TermsName": overview[:terms_and_conditions][:terms_name]
+                  }
+                ]
               },
               "PersonApplicant": person_applicants(application[:person_applicants]),
               "RealEstateAsset": real_estate_assets(application[:real_estate_assets]),
@@ -57,7 +63,13 @@ module Endpoints
               "Summary": {
                 "@FeesDisclosureDate": application[:summary][:fees_disclosure_date],
                 "Fee": fees(application[:summary][:fees])
-              }
+              },
+              "RelatedCompany": [
+                {
+                  "@UniqueID": application[:related_company][:unique_id],
+                  "@CompanyName": application[:related_company][:company_name]
+                }
+              ]
             }
           },
           "Instructions": instructions(data[:instructions]),
@@ -272,6 +284,7 @@ module Endpoints
           "EquityRelease": {
             "Amount": {
               "@CalculateAsPercentage": detail[:equity_release][:amount][:calculate_as_percentage],
+              "@LumpSum": detail[:equity_release][:amount][:lump_sum].to_i,
             }
           }
         }
@@ -583,7 +596,8 @@ module Endpoints
           ],
           "EstimatedValue": {
             "@Value": asset[:estimated_value][:value].to_i,
-            "@ValuedDate": asset[:estimated_value][:valued_date]
+            "@ValuedDate": asset[:estimated_value][:valued_date],
+            "@x_Valuer": asset[:estimated_value][:valuer]
           }
         }
       end
@@ -629,6 +643,8 @@ module Endpoints
           "@Description": encumbrance[:description],
           "@EncumbranceType": encumbrance[:encumbrance_type],
           "@RegisteredNumber": encumbrance[:registered_number],
+          "@Priority": encumbrance[:priority],
+          "@PriorityAmount": encumbrance[:priority_amount].to_i,
           "InFavourOf": in_favour_ofs(encumbrance[:in_favour_ofs])
         }
       end
