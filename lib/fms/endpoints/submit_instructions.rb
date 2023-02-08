@@ -557,7 +557,6 @@ module Endpoints
 
       result = []
 
-      puts proof_of_identities
       proof_of_identities.each do |proof_of_identity|
         result << {
           "@DateDocumentVerified": proof_of_identity[:date_document_verified],
@@ -573,7 +572,6 @@ module Endpoints
       result = []
 
       assets.each do |asset|
-        puts asset
         result << {
           "@Construction": asset[:construction],
           "@PrimaryUsage": asset[:primary_usage],
@@ -658,8 +656,6 @@ module Endpoints
       return [] if in_favour_ofs.nil? || in_favour_ofs.empty?
 
       result = []
-
-      puts 'break'
 
       in_favour_ofs.each do |in_favour_of|
         result << {
