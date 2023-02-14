@@ -35,13 +35,13 @@ module Endpoints
                 "@DocType": overview[:doc_type],
                 "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
-                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number],
-                "TermsAndConditions": [
-                  {
-                    "@TermsDescription": overview[:terms_and_conditions][:terms_description],
-                    "@TermsName": overview[:terms_and_conditions][:terms_name]
-                  }
-                ]
+                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
+                # "TermsAndConditions": [
+                #   {
+                #     "@TermsDescription": overview[:terms_and_conditions][:terms_description],
+                #     "@TermsName": overview[:terms_and_conditions][:terms_name]
+                #   }
+                # ]
               },
               "PersonApplicant": person_applicants(application[:person_applicants]),
               "RealEstateAsset": real_estate_assets(application[:real_estate_assets]),
