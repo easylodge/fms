@@ -5,7 +5,7 @@ RSpec.describe Fms do
     expect(Fms::VERSION).not_to be nil
   end
 
-  it "has version number 1.0.1" do
-    expect(Fms::VERSION).to eq("1.0.1")
+  it "has version number 1.0.2" do
+    expect(Fms::VERSION).to eq("1.0.2")
   end
 end
