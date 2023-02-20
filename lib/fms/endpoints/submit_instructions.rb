@@ -219,8 +219,13 @@ module Endpoints
             "Owner": liability_owners(liability[:percent_owned][:owners])
           },
           "AccountNumber": {
-            "@OtherFIName": liability[:account_number][:other_financial_institution_name],
-          }
+            "@OtherFIName": liability[:account_number][:other_financial_institution_name]
+          },
+          "Security": [
+            {
+              "@x_Security": liability[:security][:security_id]
+            }
+          ]
         }
       end
 
@@ -616,10 +621,10 @@ module Endpoints
           },
           "Encumbrance": encumbrances(asset[:encumbrances]),
           "Insurance": real_estate_insurances(asset[:insurances]),
-          # "PercentOwned": {
-          #   "@Proportions": asset[:percent_owned][:proportions],
-          #   "Owner": owners(asset[:percent_owned][:owners])
-          # },
+          "PercentOwned": {
+            "@Proportions": asset[:percent_owned][:proportions],
+            "Owner": owners(asset[:percent_owned][:owners])
+          },
           "Title": [
             {
               "@Volume": asset[:title][:volume],
@@ -719,7 +724,7 @@ module Endpoints
 
       owners.each do |owner|
         result << {
-          "@x_Party": owner[:party]
+          "@x_Party": owner[:owner_id]
         }
       end
 
