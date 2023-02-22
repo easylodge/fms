@@ -35,8 +35,9 @@ module Fms
     end
 
     def format_response(response)
-      puts "break"
       response.parsed_response.deep_transform_keys { |key| key.to_s.delete("@").underscore.to_sym }
+    rescue
+      { error: "Something went wrong", message: response }
     end
 
   end

@@ -35,13 +35,8 @@ module Endpoints
                 "@DocType": overview[:doc_type],
                 "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
-                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
-                # "TermsAndConditions": [
-                #   {
-                #     "@TermsDescription": overview[:terms_and_conditions][:terms_description],
-                #     "@TermsName": overview[:terms_and_conditions][:terms_name]
-                #   }
-                # ]
+                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number],
+                "TermsAndConditions": terms_and_conditions(overview[:terms_and_conditions])
               },
               "PersonApplicant": person_applicants(application[:person_applicants]),
               "RealEstateAsset": real_estate_assets(application[:real_estate_assets]),
@@ -98,7 +93,8 @@ module Endpoints
           },
           "SchemaVersion": {
             "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
-            "@LIXIVersion": data[:schema_version][:lixi_version],
+            "@LIXIVersion": "2.2.47"
+            # "@LIXIVersion": data[:schema_version][:lixi_version],
           }
         }
       }
@@ -166,28 +162,6 @@ module Endpoints
 
       result
     end
-
-    # def insurances(insurances)
-    #   return [] if insurances.nil? || insurances.empty?
-
-    #   result = []
-
-    #   insurances.each do |insurance|
-    #     amount = (insurance[:premium] && insurance[:premium][:amount])? insurance[:premium][:amount].to_f : nil
-
-    #     result << {
-    #       "@InsuranceType": insurance[:insurance_type],
-    #       "@Insurer": insurance[:insurer],
-    #       "@UniqueID": insurance[:unique_id],
-    #       "AssociatedLoanAccount": insurance_associated_accounts(insurance[:associated_loan_accounts]),
-    #       "Premium": {
-    #         "@Amount": amount
-    #       }
-    #     }
-    #   end
-
-    #   result
-    # end
 
     def insurance_associated_accounts(associated_loan_accounts)
       return [] if associated_loan_accounts.nil? || associated_loan_accounts.empty?
@@ -422,6 +396,7 @@ module Endpoints
       compositions.each do |rate_composition|
         result << {
           "@UniqueID": rate_composition[:unique_id],
+          "@TotalInterestRate": rate_composition[:total_interest_rate].to_f,
           "BaseRate": {
             "@Name": rate_composition[:base_rate][:name],
             "@Rate": rate_composition[:base_rate][:rate].to_f
@@ -497,6 +472,20 @@ module Endpoints
             "@EstimateBasis": asset[:estimated_value][:estimate_basis],
             "@Value": asset[:estimated_value][:value].to_i
           }
+        }
+      end
+
+      result
+    end
+
+    def terms_and_conditions(terms_and_conditions)
+      result = []
+      return result if terms_and_conditions.nil? || terms_and_conditions.empty?
+
+      terms_and_conditions.each do |term_and_condition|
+        result << {
+          "@TermsDescription": term_and_condition[:terms_description],
+          "@TermsName": term_and_condition[:terms_name]
         }
       end
 
@@ -724,7 +713,7 @@ module Endpoints
 
       owners.each do |owner|
         result << {
-          "@x_Party": owner[:owner_id]
+          "@x_Party": owner[:party]
         }
       end
 
