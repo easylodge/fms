@@ -94,7 +94,6 @@ module Endpoints
           "SchemaVersion": {
             "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
             "@LIXIVersion": "2.2.47"
-            # "@LIXIVersion": data[:schema_version][:lixi_version],
           }
         }
       }
