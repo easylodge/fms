@@ -24,8 +24,8 @@ module Endpoints
             "Application": {
               "@ProductionData": production_data(),
               "Address": addresses(application[:addresses]),
-              "DetailedComment": detailed_comments(application[:detailed_comments]),
               "Insurance": insurances(application[:insurances]),
+              "DetailedComment": detailed_comments(application[:detailed_comments]),
               "Liability": liabilities(application[:liabilities]),
               "LoanDetails": loan_details(application[:loan_details]),
               "NonRealEstateAsset": non_real_estate_assets(application[:non_real_estate_assets]),
@@ -35,13 +35,8 @@ module Endpoints
                 "@DocType": overview[:doc_type],
                 "@DocumentGenerationEngineReferenceNumber": overview[:document_generation_engine_reference_number].to_s,
                 "@FHLDSApproved": overview[:fhlds_approved],
-                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number]
-                # "TermsAndConditions": [
-                #   {
-                #     "@TermsDescription": overview[:terms_and_conditions][:terms_description],
-                #     "@TermsName": overview[:terms_and_conditions][:terms_name]
-                #   }
-                # ]
+                "@LenderApplicationReferenceNumber": overview[:lender_application_reference_number],
+                "TermsAndConditions": terms_and_conditions(overview[:terms_and_conditions])
               },
               "PersonApplicant": person_applicants(application[:person_applicants]),
               "RealEstateAsset": real_estate_assets(application[:real_estate_assets]),
@@ -88,11 +83,17 @@ module Endpoints
           "BusinessChannel": {
             "Contact": {
                 "@Email": data[:business_channel][:contact][:email],
+                "ContactPerson": {
+                  "@Email": data[:business_channel][:contact][:contact_person][:email],
+                  "@FirstName": data[:business_channel][:contact][:contact_person][:first_name],
+                  "@NameTitle": data[:business_channel][:contact][:contact_person][:name_title],
+                  "@Surname": data[:business_channel][:contact][:contact_person][:surname]
+                }
             }
           },
           "SchemaVersion": {
             "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
-            "@LIXIVersion": data[:schema_version][:lixi_version],
+            "@LIXIVersion": "2.2.47"
           }
         }
       }
@@ -131,6 +132,20 @@ module Endpoints
       standard
     end
 
+    def insurances(insurances)
+      result = []
+
+      insurances.each do |insurance|
+        result << {
+          "@Description": insurance[:description],
+          "@InsuredAmount": insurance[:insured_amount].to_i,
+          "@UniqueID": insurance[:unique_id]
+        }
+      end
+
+      result
+    end
+
     def detailed_comments(comments)
       return [] if comments.nil? || comments.empty?
 
@@ -140,28 +155,6 @@ module Endpoints
         result << {
           "Comment": {
             "$": comment[:comment]
-          }
-        }
-      end
-
-      result
-    end
-
-    def insurances(insurances)
-      return [] if insurances.nil? || insurances.empty?
-
-      result = []
-
-      insurances.each do |insurance|
-        amount = (insurance[:premium] && insurance[:premium][:amount])? insurance[:premium][:amount].to_f : nil
-
-        result << {
-          "@InsuranceType": insurance[:insurance_type],
-          "@Insurer": insurance[:insurer],
-          "@UniqueID": insurance[:unique_id],
-          "AssociatedLoanAccount": insurance_associated_accounts(insurance[:associated_loan_accounts]),
-          "Premium": {
-            "@Amount": amount
           }
         }
       end
@@ -197,7 +190,15 @@ module Endpoints
           "@Type": liability[:type],
           "PercentOwned": {
             "Owner": liability_owners(liability[:percent_owned][:owners])
-          }
+          },
+          "AccountNumber": {
+            "@OtherFIName": liability[:account_number][:other_financial_institution_name]
+          },
+          "Security": [
+            {
+              "@x_Security": liability[:security][:security_id]
+            }
+          ]
         }
       end
 
@@ -267,7 +268,7 @@ module Endpoints
           },
           "RateComposition": rate_compositions(detail[:rate_compositions]),
           "Security": securities(detail[:securities]),
-          "FundsDisbursement": funds_disburements(detail[:funds_disburements]),
+          "FundsDisbursement": funds_disburements(detail[:fund_disbursements]),
           "Term": {
             "@InterestType": term[:interest_type],
             "@InterestTypeDuration": term[:interest_type_duration].to_i,
@@ -345,6 +346,7 @@ module Endpoints
 
       purposes.each do |purpose|
         result << {
+          "@ABSLendingPurpose": purpose[:abs_lending_purpose],
           "@ABSLendingPurposeCode": purpose[:abs_lending_purpose_code],
           "@PurposeAmount": purpose[:purpose_amount].to_i
         }
@@ -393,6 +395,7 @@ module Endpoints
       compositions.each do |rate_composition|
         result << {
           "@UniqueID": rate_composition[:unique_id],
+          "@TotalInterestRate": rate_composition[:total_interest_rate].to_f,
           "BaseRate": {
             "@Name": rate_composition[:base_rate][:name],
             "@Rate": rate_composition[:base_rate][:rate].to_f
@@ -411,7 +414,8 @@ module Endpoints
       securities.each do |security|
         result << {
           "@Priority": security[:priority],
-          "@x_Security": security[:security]
+          "@x_Security": security[:security],
+          "@UniqueID": security[:unique_id]
         }
       end
 
@@ -425,8 +429,13 @@ module Endpoints
 
       disburements.each do |disburement|
         result << {
-          "CompanyName": disburement[:company_name],
-          "Amount": disburement[:amount].to_i
+          "@CompanyName": disburement[:company_name],
+          "@Amount": disburement[:amount].to_i,
+          "@UniqueID": disburement[:unique_id],
+          "AccountNumber": {
+            "@AccountNumber": disburement[:account_number][:account_number],
+            "@OtherFIName": disburement[:account_number][:financial_institution]
+          }
         }
       end
 
@@ -462,6 +471,20 @@ module Endpoints
             "@EstimateBasis": asset[:estimated_value][:estimate_basis],
             "@Value": asset[:estimated_value][:value].to_i
           }
+        }
+      end
+
+      result
+    end
+
+    def terms_and_conditions(terms_and_conditions)
+      result = []
+      return result if terms_and_conditions.nil? || terms_and_conditions.empty?
+
+      terms_and_conditions.each do |term_and_condition|
+        result << {
+          "@TermsDescription": term_and_condition[:terms_description],
+          "@TermsName": term_and_condition[:terms_name]
         }
       end
 
@@ -573,12 +596,14 @@ module Endpoints
 
       assets.each do |asset|
         result << {
+          "@UniqueID": asset[:unique_id],
+          "@PropertyID": asset[:property_id],
+          "@x_Address": asset[:address_id],
           "@Construction": asset[:construction],
           "@PrimaryUsage": asset[:primary_usage],
-          "@PropertyID": asset[:property_id],
+          "@PrimaryPurpose": asset[:primary_purpose],
           "@ToBeUsedAsSecurity": asset[:to_be_used_as_security],
           "@Transaction": asset[:transaction],
-          "@UniqueID": asset[:unique_id],
           "ContractDetails": {
             "@ContractPriceAmount": asset[:contract_details][:contract_price_amount].to_i,
           },
@@ -673,7 +698,7 @@ module Endpoints
 
       insurances.each do |insurance|
         result << {
-          "@x_Insurance": insurance[:insurance]
+          "@x_Insurance": insurance[:insurance_id]
         }
       end
 
@@ -722,7 +747,7 @@ module Endpoints
       fees.each do |fee|
         result << {
           "@Amount": fee[:amount].to_i,
-          "@Description": fee[:description],
+          "@Description": fee[:description].titleize,
           "@Frequency": fee[:frequency],
           "@PayFeesFrom": fee[:pay_fees_from],
           "@Type": fee[:type]
