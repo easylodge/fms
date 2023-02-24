@@ -748,7 +748,7 @@ module Endpoints
       fees.each do |fee|
         result << {
           "@Amount": fee[:amount].to_i,
-          "@Description": fee[:description],
+          "@Description": fee[:description].titleize,
           "@Frequency": fee[:frequency],
           "@PayFeesFrom": fee[:pay_fees_from],
           "@Type": fee[:type]
