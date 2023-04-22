@@ -6,8 +6,8 @@ require "fms/version"
 Gem::Specification.new do |spec|
   spec.name          = "fms"
   spec.version       = Fms::VERSION
-  spec.authors       = ["SeanBClark"]
-  spec.email         = ["sean.bradley.clark@gmail.com"]
+  spec.authors       = ["EasyLodge", "Sean Clark"]
+  spec.email         = ["info@easylodge.com.au", "sc@easylodge.com.au"]
 
   spec.summary       = %q{A Ruby gem for integrating with the First Mortgage Solutions API}
   spec.description   = %q{A Ruby gem for integrating with the First Mortgage Solutions API}
