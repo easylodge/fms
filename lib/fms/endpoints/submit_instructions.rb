@@ -80,17 +80,17 @@ module Endpoints
             }
           },
           "Recipient": recipients(data[:recipients]),
-          "BusinessChannel": {
-            "Contact": {
-                "@Email": data[:business_channel][:contact][:email],
-                "ContactPerson": {
-                  "@Email": data[:business_channel][:contact][:contact_person][:email],
-                  "@FirstName": data[:business_channel][:contact][:contact_person][:first_name],
-                  "@NameTitle": data[:business_channel][:contact][:contact_person][:name_title],
-                  "@Surname": data[:business_channel][:contact][:contact_person][:surname]
-                }
-            }
-          },
+          # "BusinessChannel": {
+          #   "Contact": {
+          #       "@Email": data[:business_channel][:contact][:email],
+          #       "ContactPerson": {
+          #         "@Email": data[:business_channel][:contact][:contact_person][:email],
+          #         "@FirstName": data[:business_channel][:contact][:contact_person][:first_name],
+          #         "@NameTitle": data[:business_channel][:contact][:contact_person][:name_title],
+          #         "@Surname": data[:business_channel][:contact][:contact_person][:surname]
+          #       }
+          #   }
+          # },
           "SchemaVersion": {
             "@LIXITransactionType": data[:schema_version][:lixi_transaction_type],
             "@LIXIVersion": "2.2.47"
@@ -232,7 +232,7 @@ module Endpoints
         result << {
           "@AmountRequested": detail[:amount_requested].to_i,
           "@EstimatedSettlementDate": detail[:estimated_settlement_date],
-          "@Funder": detail[:funder],
+          # "@Funder": detail[:funder],
           "@LoanType": detail[:loan_type],
           "@MainProduct": detail[:main_product],
           "@ProductCode": detail[:product_code],
