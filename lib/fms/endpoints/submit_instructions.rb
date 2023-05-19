@@ -139,6 +139,7 @@ module Endpoints
         result << {
           "@Description": insurance[:description],
           "@InsuredAmount": insurance[:insured_amount].to_i,
+          "@InsuranceType": insurance[:insurance_type],
           "@UniqueID": insurance[:unique_id]
         }
       end
