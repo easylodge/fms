@@ -751,7 +751,8 @@ module Endpoints
           "@Description": fee[:description].titleize,
           "@Frequency": fee[:frequency],
           "@PayFeesFrom": fee[:pay_fees_from],
-          "@Type": fee[:type]
+          "@Type": fee[:type],
+          "@Paid": fee[:paid]
         }
       end
 
