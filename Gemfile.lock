@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fms (1.0.1)
+    fms (2.0.6)
 
 GEM
   remote: https://rubygems.org/
@@ -17,25 +17,25 @@ GEM
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)
       rspec-mocks (~> 3.12.0)
-    rspec-core (3.12.0)
+    rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
-    rspec-expectations (3.12.0)
+    rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.0)
+    rspec-mocks (3.12.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-support (3.12.0)
+    rspec-support (3.12.1)
 
 PLATFORMS
-  ruby
+  arm64-darwin-21
 
 DEPENDENCIES
-  bundler (~> 1.17)
+  bundler (~> 2.4.12)
   fms!
   httparty (~> 0.13.7)
   rake (~> 10.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.17.3
+   2.4.12
