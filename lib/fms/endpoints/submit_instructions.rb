@@ -525,6 +525,7 @@ module Endpoints
           "Employment": employments(applicant[:employments]),
           "PersonName": {
             "@FirstName": applicant[:person_name][:first_name],
+            "@MiddleNames": applicant[:person_name][:middle_names],
             "@NameTitle": applicant[:person_name][:name_title],
             "@Surname": applicant[:person_name][:surname]
           },
