@@ -182,7 +182,7 @@ module Endpoints
 
       result = []
 
-      liabilities.each do |liability|
+      liabilities.each_with_index do |liability, index|
         result << {
           "@ClosingOnSettlement": liability[:closing_on_settlement],
           "@ClearingFromThisLoan": liability[:clearing_from_this_loan],
@@ -194,13 +194,12 @@ module Endpoints
           },
           "AccountNumber": {
             "@OtherFIName": liability[:account_number][:other_financial_institution_name]
-          },
-          "Security": [
-            {
-              "@x_Security": liability[:security][:security_id]
-            }
-          ]
+          }
         }
+
+        if liability[:secured] == "Yes"
+          result[index]["Security"] = [{ "@x_Security": liability[:security][:security_id] }]
+        end
       end
 
       result
