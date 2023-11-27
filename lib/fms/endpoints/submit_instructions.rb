@@ -43,6 +43,7 @@ module Endpoints
               "RelatedPerson": related_people(application[:related_people]),
               "SalesChannel": {
                 "Commission": commissions(application[:sales_channel][:commissions]),
+                "LoanWriter": loan_writer(application[:sales_channel][:loan_writer]),
                 "Company": {
                   "Contact": {
                     "ContactPerson": {
@@ -652,11 +653,25 @@ module Endpoints
 
       commissions.each do |commission|
         result << {
-          "@Trail": commission[:trail].to_f,
+          "@CommissionAmount": commission[:commission_amount].to_f,
+          "@ThirdPartyReferee": commission[:third_party_referee]
         }
       end
 
       result
+    end
+
+    def loan_writer(loan_writer)
+      return {} if loan_writer.nil? || loan_writer.empty? || loan_writer[:first_name].to_s.empty? ||
+                   loan_writer[:surname].to_s.empty? || loan_writer[:contact][:email].to_s.empty?
+
+      {
+        "@FirstName": application[:sales_channel][:loan_writer][:first_name],
+        "@Surname": application[:sales_channel][:loan_writer][:surname],
+        "Contact": {
+          "@Email": application[:sales_channel][:loan_writer][:contact][:email]
+        }
+      }
     end
 
     def encumbrances(encumbrances)
