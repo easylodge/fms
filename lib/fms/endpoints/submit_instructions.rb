@@ -666,10 +666,10 @@ module Endpoints
                    loan_writer[:surname].to_s.empty? || loan_writer[:contact][:email].to_s.empty?
 
       {
-        "@FirstName": application[:sales_channel][:loan_writer][:first_name],
-        "@Surname": application[:sales_channel][:loan_writer][:surname],
+        "@FirstName": loan_writer[:first_name],
+        "@Surname": loan_writer[:surname],
         "Contact": {
-          "@Email": application[:sales_channel][:loan_writer][:contact][:email]
+          "@Email": loan_writer[:contact][:email]
         }
       }
     end
